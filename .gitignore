@@ -43,3 +43,4 @@ build/
 build2/
 *.out
 **/*.out
+main

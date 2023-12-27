@@ -1,29 +1,30 @@
 #ifndef SLIST_H
 #define SLIST_H
-#include <stdlib.h>
+#include<stdint.h>
+#include<stddef.h>
 
 // Provides an implementation for a singly linked list in C
 // along with various methods for other operations
 
 // TODO: A list struct with variables such as size, last, etc
 
-struct sslist_node
+struct slist_node
 {
     int data;
-    void *next;
+    struct slist_node *next;
 };
 
 // Allocates memory for a single slist_node, calls exit() if memory allocation fails
-struct slistslist_node* wmalloc();
+struct slist_node* wmalloc(void);
 
 // Reads a space separated list of numbers from standard input and creates a new list
-struct slist_node *slist_read();
+struct slist_node *slist_read(void);
 
 // Print the list to standard output
-void display(const struct slist_node *head);
+void slist_display(struct slist_node *head);
 
 // Finds the size of the list
-size_t slist_size(const struct slist_node *head);
+size_t slist_size(struct slist_node *head);
 
 // Returns the node at the given index, NULL if the index is invalid
 struct slist_node *slist_slist_node_at(size_t index);
