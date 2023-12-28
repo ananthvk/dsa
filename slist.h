@@ -47,6 +47,22 @@ struct slist_node *slist_insert_at(struct slist_node **head, size_t index, int v
 // Inserts a value in a sorted list (non decreasing order) so that the ordering does not change
 struct slist_node *slist_sorted_insert(struct slist_node **head, int value);
 
+// Sorts the list by repeatedly calling slist_sorted_insert, thereby arranging the nodes in correct
+// order
+void slist_sort(struct slist_node **head);
+
+// Deletes the first element of the list, returns 0 if the delete is successfull
+int slist_pop(struct slist_node **head);
+
+// Free the list
+void slist_free(struct slist_node **head);
+
+// Concatenates src into destination
+// Note: After concatination, the second list (src) will be set to NULL
+// Tansfer ownership of nodes from src list to dst list
+void slist_concat(struct slist_node **dst, struct slist_node **src);
+
+
 // Adds a node to the end of the list, O(n) operation
 // @param head pointer to head node pointer
 // @param value value to add to the list
@@ -61,10 +77,6 @@ struct slist_node *slist_insert_after(struct slist_node **head, int key, int val
 // @return If the key is not found, returns NULL, otherwise returns the new node
 struct slist_node *slist_insert_before(struct slist_node **head, int key, int value);
 
-// Deletes the first element of the list, returns 0 if the delete is successfull
-int slist_pop(struct slist_node **head);
-
-
 // Deletes the last element of the list, O(n) operation
 int slist_delete_end(struct slist_node **head);
 
@@ -76,12 +88,4 @@ struct slist_node *slist_delete_after(struct slist_node **head, int key);
 
 // Deletes the element before the element with the given key
 struct slist_node *slist_delete_before(struct slist_node **head, int key);
-
-// Concatenates src into destination
-// Note: This performs a shallow copy and modifications in one list, reflect in the other
-struct slist_node *slist_concat(struct slist_node *dst, struct slist_node *src);
-
-// Free the list
-void slist_free(struct slist_node **head);
-
 #endif

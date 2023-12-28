@@ -126,7 +126,6 @@ int slist_pop(struct slist_node **head)
     }
     if (*head == NULL)
     {
-        // TODO: panic instead of ignoring the error if the head is null
         return -1;
     }
     struct slist_node *next_node = (*head)->next;
@@ -207,4 +206,57 @@ struct slist_node *slist_sorted_insert(struct slist_node **head, int value)
     new_node->next = t;
     f->next = new_node;
     return new_node;
+}
+
+void slist_sort(struct slist_node **head)
+{
+    struct slist_node *list2 = NULL;
+    if (head == NULL)
+    {
+        // Handle this case when the pointer passed is NULL
+        fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
+        exit(1);
+    }
+    if (*head == NULL)
+        return;
+
+
+    slist_sorted_insert(&list2, (*head)->data);
+    while (!slist_pop(head))
+    {
+        if (*head)
+            slist_sorted_insert(&list2, (*head)->data);
+    }
+    *head = list2;
+}
+
+void slist_concat(struct slist_node **dst, struct slist_node **src)
+{
+    struct slist_node *tmp;
+    if (dst == NULL || src == NULL)
+    {
+        // Handle this case when the pointer passed is NULL
+        fprintf(stderr, "panic: passed dst or src is NULL\n");
+        exit(1);
+    }
+    if (*src == *dst)
+    {
+        fprintf(stderr, "panic: src is equal to dst\n");
+        exit(1);
+    }
+    if (*dst == NULL)
+    {
+        *dst = *src;
+        *src = NULL;
+        return;
+    }
+
+
+    tmp = *dst;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+    }
+    tmp->next = *src;
+    *src = NULL;
 }

@@ -56,17 +56,27 @@ int main()
     slist_display(list);
     slist_free(&list);
     
-    slist_sorted_insert(&list, 3);
-    slist_sorted_insert(&list, -1);
-    slist_sorted_insert(&list, 0);
-    slist_sorted_insert(&list, 8);
-    slist_sorted_insert(&list, 16);
-    slist_sorted_insert(&list, 20);
-    slist_sorted_insert(&list, 4);
-    slist_sorted_insert(&list, 12);
-    slist_sorted_insert(&list, 9);
-    slist_sorted_insert(&list, 1000);
-    slist_sorted_insert(&list, -1000);
+    slist_push(&list, 3);
+    slist_push(&list, -1);
+    slist_push(&list, 0);
+    slist_push(&list, 8);
+    slist_push(&list, 16);
+    slist_push(&list, 20);
+    slist_push(&list, 4);
+    slist_push(&list, 12);
+    slist_push(&list, 9);
+    slist_push(&list, 1000);
+    slist_push(&list, -1000);
+    
+    struct slist_node* s = sample_list();
+    slist_sort(&s);
+    slist_display(s);
+
+    slist_concat(&list, &s);
+    slist_concat(&list, &s);
+    slist_display(list);
+
+    slist_sort(&list);
     slist_display(list);
     slist_free(&list);
 }
