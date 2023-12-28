@@ -1,7 +1,7 @@
 #ifndef SLIST_H
 #define SLIST_H
-#include<stdint.h>
-#include<stddef.h>
+#include <stddef.h>
+#include <stdint.h>
 
 // Provides an implementation for a singly linked list in C
 // along with various methods for other operations
@@ -14,8 +14,17 @@ struct slist_node
     struct slist_node *next;
 };
 
+// Solve linked list puzzles from here
+// http://cslibrary.stanford.edu/105/LinkedListProblems.pdf
+
+// Generates a sample list to run linked list functions without taking input (for development)
+struct slist_node *sample_list(void);
+
+// Count the number of occurences of key in the linked list
+size_t slist_count(struct slist_node *head, int key);
+
 // Allocates memory for a single slist_node, calls exit() if memory allocation fails
-struct slist_node* wmalloc(void);
+struct slist_node *wmalloc(void);
 
 // Reads a space separated list of numbers from standard input and creates a new list
 struct slist_node *slist_read(void);
@@ -23,11 +32,11 @@ struct slist_node *slist_read(void);
 // Print the list to standard output
 void slist_display(struct slist_node *head);
 
-// Finds the size of the list
+// Finds the size of the list, O(n)
 size_t slist_size(struct slist_node *head);
 
 // Returns the node at the given index, NULL if the index is invalid
-struct slist_node *slist_slist_node_at(size_t index);
+struct slist_node *slist_node_at(struct slist_node *head, size_t index);
 
 // Adds a new node to the head of the list, O(1) operation, returns the created node
 struct slist_node *slist_push(struct slist_node **head, int value);
