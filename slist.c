@@ -188,7 +188,7 @@ struct slist_node *slist_sorted_insert(struct slist_node **head, int value)
         fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
         exit(1);
     }
-    if (*head == NULL || value < (*head)->data)
+    if (*head == NULL || value <= (*head)->data)
     {
         // The value is smaller than all other elements
         // Insert at beginning
