@@ -30,11 +30,43 @@ int main()
 
     printf("list[10] = %p\n", (void*)slist_node_at(list, 10));
     
-    slist_pop(&list);
-    slist_pop(&list);
-    slist_pop(&list);
-    
+    while(!slist_pop(&list))
+        ;
+    slist_insert_at(&list, 0, 3);
     slist_display(list);
+    slist_free(&list);
+
+    slist_insert_at(&list, 8, 6);
+    slist_insert_at(&list, 8, 12);
+    slist_insert_at(&list, 9, 13);
+    slist_display(list);
+    slist_free(&list);
+
+    slist_insert_at(&list, 0, 21);
+    slist_insert_at(&list, 0, 12);
+    slist_display(list);
+    slist_free(&list);
+
+    slist_push(&list, 5);
+    slist_push(&list, 8);
+    slist_push(&list, 11);
+    slist_push(&list, 14);
+    slist_push(&list, 17);
+    slist_insert_at(&list, 2, 12);
+    slist_display(list);
+    slist_free(&list);
     
+    slist_sorted_insert(&list, 3);
+    slist_sorted_insert(&list, -1);
+    slist_sorted_insert(&list, 0);
+    slist_sorted_insert(&list, 8);
+    slist_sorted_insert(&list, 16);
+    slist_sorted_insert(&list, 20);
+    slist_sorted_insert(&list, 4);
+    slist_sorted_insert(&list, 12);
+    slist_sorted_insert(&list, 9);
+    slist_sorted_insert(&list, 1000);
+    slist_sorted_insert(&list, -1000);
+    slist_display(list);
     slist_free(&list);
 }

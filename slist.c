@@ -40,9 +40,11 @@ void slist_display(struct slist_node *head)
 
 struct slist_node *slist_push(struct slist_node **head, int item)
 {
+
     if (head == NULL)
     {
-        return NULL;
+        fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
+        exit(1);
     }
 
     struct slist_node *new_node = wmalloc();
@@ -117,7 +119,12 @@ struct slist_node *slist_node_at(struct slist_node *n, size_t index)
 
 int slist_pop(struct slist_node **head)
 {
-    if (head == NULL || *head == NULL)
+    if (head == NULL)
+    {
+        fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
+        exit(1);
+    }
+    if (*head == NULL)
     {
         // TODO: panic instead of ignoring the error if the head is null
         return -1;
@@ -126,4 +133,78 @@ int slist_pop(struct slist_node **head)
     free(*head);
     *head = next_node;
     return 0;
+}
+
+struct slist_node *slist_insert_at(struct slist_node **head, size_t index, int value)
+{
+    struct slist_node *temp, *prev, *new_node;
+    size_t i = 0;
+    // There are 3 possible cases
+    // 1. At index 0, call slist_push
+    // 2. At index >= size-1, call slist_append
+    // 3. Otherwise, find node at index-1, and insert the new node after it
+    if (head == NULL)
+    {
+        // Handle this case when the pointer passed is NULL
+        fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
+        exit(1);
+    }
+    if (*head == NULL || index == 0)
+    {
+        return slist_push(head, value);
+    }
+    else
+    {
+        new_node = wmalloc();
+        new_node->data = value;
+        temp = *head;
+        prev = *head;
+        while (temp != NULL && i != index)
+        {
+            prev = temp;
+            temp = temp->next;
+            i += 1;
+        }
+        if (temp == NULL)
+        {
+            // Insert the node at the end
+            new_node->next = NULL;
+            prev->next = new_node;
+        }
+        else
+        {
+            new_node->next = temp;
+            prev->next = new_node;
+        }
+        return new_node;
+    }
+}
+
+struct slist_node *slist_sorted_insert(struct slist_node **head, int value)
+{
+    struct slist_node *t, *f, *new_node;
+    if (head == NULL)
+    {
+        // Handle this case when the pointer passed is NULL
+        fprintf(stderr, "panic: passed pointer to head pointer is NULL\n");
+        exit(1);
+    }
+    if (*head == NULL || value < (*head)->data)
+    {
+        // The value is smaller than all other elements
+        // Insert at beginning
+        return slist_push(head, value);
+    }
+    t = *head;
+    f = *head;
+    while (t != NULL && t->data < value)
+    {
+        f = t;
+        t = t->next;
+    }
+    new_node = wmalloc();
+    new_node->data = value;
+    new_node->next = t;
+    f->next = new_node;
+    return new_node;
 }

@@ -41,6 +41,12 @@ struct slist_node *slist_node_at(struct slist_node *head, size_t index);
 // Adds a new node to the head of the list, O(1) operation, returns the created node
 struct slist_node *slist_push(struct slist_node **head, int value);
 
+// Insert the value at the given index, and returns the new node
+struct slist_node *slist_insert_at(struct slist_node **head, size_t index, int value);
+
+// Inserts a value in a sorted list (non decreasing order) so that the ordering does not change
+struct slist_node *slist_sorted_insert(struct slist_node **head, int value);
+
 // Adds a node to the end of the list, O(n) operation
 // @param head pointer to head node pointer
 // @param value value to add to the list
@@ -55,8 +61,9 @@ struct slist_node *slist_insert_after(struct slist_node **head, int key, int val
 // @return If the key is not found, returns NULL, otherwise returns the new node
 struct slist_node *slist_insert_before(struct slist_node **head, int key, int value);
 
-// Deletes the first element of the list
+// Deletes the first element of the list, returns 0 if the delete is successfull
 int slist_pop(struct slist_node **head);
+
 
 // Deletes the last element of the list, O(n) operation
 int slist_delete_end(struct slist_node **head);
